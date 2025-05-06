@@ -115,28 +115,23 @@ public class Libreria {
 	}
 
 	public static void cargarLibreria() {
-		try {
-			if (file.exists()) {
-				// File --> ArrayList [DESERIALIZAR]
-				FileInputStream fis = new FileInputStream(file);
-				ObjectInputStream ois = new ObjectInputStream(fis);
-				while (true) {
-					try {
-						Libro libro = (Libro) ois.readObject();
-						listaLibros.add(libro);
-					} catch (EOFException e) {
-						break; // Fin del archivo alcanzado
-					} catch (ClassNotFoundException e) {
-						e.printStackTrace();
-					}
-				}
-			} else {
-				file.createNewFile();
-			}
-		} catch (IOException e) {
-			// TODO: handle exception
-		}
+	    try {
+	        if (file.exists() && file.length() > 0) {
+	            FileInputStream fis = new FileInputStream(file);
+	            ObjectInputStream ois = new ObjectInputStream(fis);
+
+	            listaLibros = (ArrayList<Libro>) ois.readObject(); // leer la lista completa
+
+	            ois.close();
+	            fis.close();
+	        } else {
+	            file.createNewFile();
+	        }
+	    } catch (IOException | ClassNotFoundException e) {
+	        e.printStackTrace();
+	    }
 	}
+
 
 	public static void guardarLibreria() {
 		try {

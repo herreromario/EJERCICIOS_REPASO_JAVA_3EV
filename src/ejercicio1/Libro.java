@@ -1,8 +1,10 @@
 package ejercicio1;
 
+import java.io.*;
+
 // ATRIBUTOS DE LA CLASE LIBRO
 
-public class Libro {
+public class Libro implements Serializable {
 	private String titulo;
 	private String autor;
 	private double precio;
